@@ -4,9 +4,10 @@
 package main
 
 import (
-	"github.com/shizuku/moon_editor/command"
+	cmd "github.com/shizuku/moon_editor/commander"
 )
 
 func main() {
-	command.Loop()
+	c := cmd.New()
+	c.Loop()
 }

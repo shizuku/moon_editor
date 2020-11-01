@@ -1,4 +1,4 @@
-package editor
+package buffer
 
 import (
 	"bufio"
@@ -6,21 +6,20 @@ import (
 	"io"
 	"os"
 
-	"github.com/shizuku/moon_editor/str"
+	u "github.com/shizuku/moon_editor/unicode"
 )
 
-type Editor struct {
+type Buffer struct {
 	fileName string
-	data     []str.String
+	data     []u.String
 }
 
-func New() Editor {
-	return Editor{}
+func New() Buffer {
+	return Buffer{}
 }
-
-func (e *Editor) Read(fileName string) error {
+func (e *Buffer) Read(fileName string) error {
 	e.fileName = fileName
-	var s str.String
+	var s u.String
 	f, err := os.Open(fileName)
 	defer f.Close()
 	if err != nil {
@@ -41,8 +40,7 @@ func (e *Editor) Read(fileName string) error {
 	e.data = s.Split('\n')
 	return nil
 }
-
-func (e *Editor) String() string {
+func (e *Buffer) String() string {
 	var r []rune
 	for _, v := range e.data {
 		r = append(r, []rune(v.String())...)
@@ -50,12 +48,12 @@ func (e *Editor) String() string {
 	}
 	return string(r)
 }
-
-func (e *Editor) Print() {
-	fmt.Println(e.String())
+func (e *Buffer) Print() {
+	fmt.Println("------------------------------------------------------")
+	fmt.Print(e.String())
+	fmt.Println("------------------------------------------------------")
 }
-
-func (e *Editor) Write() error {
+func (e *Buffer) Write() error {
 	f, err := os.Open(e.fileName)
 	defer f.Close()
 	if err != nil {
