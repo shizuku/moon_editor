@@ -128,14 +128,7 @@ func (c *Commander) insert() {
 	c.buffer.Insert([]rune(text), lineIdx-1)
 }
 func (c *Commander) delete() {
-	fmt.Print("line index>")
-	var lineIdx int
-	_, err := fmt.Scan(&lineIdx)
-	if err != nil {
-		log.Fatalln(err)
-		return
-	}
-	c.buffer.Delete(lineIdx - 1)
+	c.cursor = c.buffer.Delete(c.cursor-1) + 1
 }
 func (c *Commander) find() {
 	var text string

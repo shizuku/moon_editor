@@ -80,8 +80,16 @@ func (b *Buffer) Print() {
 func (b *Buffer) Insert(text []rune, index int) {
 	b.data = append(b.data[:index], append([][]rune{text}, b.data[index:]...)...)
 }
-func (b *Buffer) Delete(index int) {
+func (b *Buffer) Delete(index int) int {
 	b.data = append(b.data[:index], b.data[index+1:]...)
+	if len(b.data) == 0 {
+		b.data = [][]rune{}
+	}
+	if index-1 <= 0 {
+		return 0
+	} else {
+		return index - 1
+	}
 }
 func (b *Buffer) Find(text []rune) (i int, j int) {
 	for i, v := range b.data {
