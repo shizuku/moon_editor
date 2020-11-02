@@ -58,7 +58,7 @@ func (b *Buffer) String() string {
 	var l LineNumberer
 	l.Init(b.LineNum())
 	for i, v := range b.data {
-		r = append(r, []rune(v)...)
+		r = append(r, v...)
 		if i != len(b.data)-1 {
 			r = append(r, '\n')
 		}
@@ -71,7 +71,7 @@ func (b *Buffer) Print() {
 	l := NewLnr(b.LineNum())
 	for i, v := range b.data {
 		r = append(r, []rune(l.Number(i+1))...)
-		r = append(r, []rune(v)...)
+		r = append(r, v...)
 		r = append(r, '\n')
 	}
 	fmt.Print(string(r))
@@ -91,11 +91,15 @@ func (b *Buffer) Delete(index int) int {
 		return index - 1
 	}
 }
-func (b *Buffer) Find(text []rune) (i int, j int) {
+func (b *Buffer) Find(text []rune, start int) (i int, j int) {
 	for i, v := range b.data {
-		j := strFind(v, text)
-		if j >= 0 {
-			return i, j
+		if i < start {
+			continue
+		} else {
+			j := strFind(v, text)
+			if j >= 0 {
+				return i, j
+			}
 		}
 	}
 	return -1, -1

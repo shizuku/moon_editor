@@ -110,35 +110,30 @@ func (c *Commander) write() {
 }
 func (c *Commander) insert() {
 	var (
-		lineIdx int
-		text    string
+		text string
 	)
-	fmt.Print("line index>")
-	_, err := fmt.Scan(&lineIdx)
-	if err != nil {
-		log.Println(err)
-		return
-	}
 	fmt.Print("text to insert>")
-	_, err = fmt.Scan(&text)
+	_, err := fmt.Scan(&text)
 	if err != nil {
 		log.Println(err)
 		return
 	}
-	c.buffer.Insert([]rune(text), lineIdx-1)
+	c.buffer.Insert([]rune(text), c.cursor-1)
 }
 func (c *Commander) delete() {
 	c.cursor = c.buffer.Delete(c.cursor-1) + 1
 }
 func (c *Commander) find() {
-	var text string
+	var (
+		text string
+	)
 	fmt.Print("text to find>")
 	_, err := fmt.Scan(&text)
 	if err != nil {
 		log.Fatalln(err)
 		return
 	}
-	i, j := c.buffer.Find([]rune(text))
+	i, j := c.buffer.Find([]rune(text), c.cursor-1)
 	fmt.Printf("%dL, %dC\n", i+1, j+1)
 
 }
