@@ -58,12 +58,11 @@ func (b *Buffer) String() string {
 	var r []rune
 	var l LineNumberer
 	l.Init(b.LineNum())
-	for _, v := range b.data {
+	for i, v := range b.data {
 		r = append(r, []rune(v)...)
-		r = append(r, '\n')
-	}
-	if len(r) > 0 {
-		r = r[:len(r)-1]
+		if i != len(b.data)-1 {
+			r = append(r, '\n')
+		}
 	}
 	return string(r)
 }
@@ -88,7 +87,7 @@ func (b *Buffer) Delete(index int) {
 }
 func (b *Buffer) Find(text string) (i int, j int) {
 	for i, v := range b.data {
-		j := strFind(v, text)
+		j := strFind(ru(v), ru(text))
 		if j >= 0 {
 			return i, j
 		}
@@ -96,7 +95,15 @@ func (b *Buffer) Find(text string) (i int, j int) {
 	return -1, -1
 }
 func (b *Buffer) Change(text, rp string, lineIdx int) {
-	b.data[lineIdx] = strReplace(b.data[lineIdx], text, rp)
+	b.data[lineIdx] = st(strReplace(ru(b.data[lineIdx]), ru(text), ru(rp)))
+}
+
+func ru(s string) []rune {
+	return []rune(s)
+}
+func st(r []rune) string {
+	fmt.Println(r)
+	return string(r)
 }
 func split(str string, sp rune) []string {
 	var r []string
@@ -112,7 +119,7 @@ func split(str string, sp rune) []string {
 	r = append(r, string(s))
 	return r
 }
-func strFind(s, mod string) int {
+func strFind(s, mod []rune) int {
 	var (
 		a  int = 0
 		da int = 0
@@ -136,7 +143,7 @@ func strFind(s, mod string) int {
 	}
 	return -1
 }
-func strReplace(s, mod, rp string) string {
+func strReplace(s, mod, rp []rune) []rune {
 	var (
 		r  []rune
 		a  int = 0
@@ -153,7 +160,7 @@ func strReplace(s, mod, rp string) string {
 		}
 		if a+da >= len(s) {
 			r = append(r, []rune(rp)...)
-			return string(r)
+			return r
 		}
 		if s[a+da] == mod[db] {
 			da++
@@ -165,5 +172,5 @@ func strReplace(s, mod, rp string) string {
 			a++
 		}
 	}
-	return string(r)
+	return r
 }

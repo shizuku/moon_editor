@@ -1,19 +1,19 @@
-// 青山远去万里遥
-// 素澜城外雨潇潇
-// 孤舟一叶问船家
-// 何日重到素澜桥
+//野有蔓草
+//零露瀼瀼
+//有美一人
+//婉兮清扬
 
 package main
 
 import (
 	"fmt"
 
-	cmd "github.com/shizuku/moon_editor/commander"
+	"github.com/shizuku/moon_editor/cmd"
 )
 
 func main() {
 	c := cmd.New()
 	c.Loop()
-	xxx := "hehehe"
+	xxx := "hihihi"
 	fmt.Println(xxx)
 }
