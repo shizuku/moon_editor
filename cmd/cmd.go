@@ -125,7 +125,7 @@ func (c *Commander) insert() {
 		log.Println(err)
 		return
 	}
-	c.buffer.Insert(text, lineIdx-1)
+	c.buffer.Insert([]rune(text), lineIdx-1)
 }
 func (c *Commander) delete() {
 	fmt.Print("line index>")
@@ -145,7 +145,7 @@ func (c *Commander) find() {
 		log.Fatalln(err)
 		return
 	}
-	i, j := c.buffer.Find(text)
+	i, j := c.buffer.Find([]rune(text))
 	fmt.Printf("%dL, %dC\n", i+1, j+1)
 
 }
@@ -166,7 +166,7 @@ func (c *Commander) change() {
 		log.Println(err)
 		return
 	}
-	c.buffer.Change(text, rp, c.cursor-1)
+	c.buffer.Change([]rune(text), []rune(rp), c.cursor-1)
 }
 func (c *Commander) help() {
 	fmt.Println("help:")

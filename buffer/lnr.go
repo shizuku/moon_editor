@@ -8,6 +8,11 @@ type LineNumberer struct {
 	p int
 }
 
+func NewLnr(maxIdx int) LineNumberer {
+	var r LineNumberer
+	r.Init(maxIdx)
+	return r
+}
 func (l *LineNumberer) Init(maxIdx int) {
 	l.p = 1
 	for {
@@ -19,7 +24,6 @@ func (l *LineNumberer) Init(maxIdx int) {
 		}
 	}
 }
-
 func (l *LineNumberer) Number(idx int) string {
 	var r []byte
 	s := strconv.Itoa(idx)
