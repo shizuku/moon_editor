@@ -5,6 +5,7 @@ import (
 	"log"
 
 	bf "github.com/shizuku/moon_editor/buffer"
+	st "github.com/shizuku/moon_editor/string"
 )
 
 type Commander struct {
@@ -118,7 +119,7 @@ func (c *Commander) insert() {
 		log.Println(err)
 		return
 	}
-	c.buffer.Insert([]rune(text), c.cursor-1)
+	c.buffer.Insert(st.New([]rune(text)), c.cursor-1)
 }
 func (c *Commander) delete() {
 	c.cursor = c.buffer.Delete(c.cursor-1) + 1
@@ -133,7 +134,7 @@ func (c *Commander) find() {
 		log.Fatalln(err)
 		return
 	}
-	i, j := c.buffer.Find([]rune(text), c.cursor-1)
+	i, j := c.buffer.Find(st.New([]rune(text)), c.cursor-1)
 	fmt.Printf("%dL, %dC\n", i+1, j+1)
 
 }
@@ -154,7 +155,7 @@ func (c *Commander) change() {
 		log.Println(err)
 		return
 	}
-	c.buffer.Change([]rune(text), []rune(rp), c.cursor-1)
+	c.buffer.Change(st.New([]rune(text)), st.New([]rune(rp)), c.cursor-1)
 }
 func (c *Commander) help() {
 	fmt.Println("help:")

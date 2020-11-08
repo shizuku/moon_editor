@@ -1,19 +1,15 @@
-// 野有蔓草
-// 零露瀼瀼
-// 有美一人
-// 婉兮清扬
+// 昨夜红楼梦
+// 今宵水国吟
+// 岛云蒸大海
+// 岚气接丛林
 
 package main
 
 import (
-	"fmt"
-
 	"github.com/shizuku/moon_editor/cmd"
 )
 
 func main() {
 	c := cmd.New()
 	c.Loop()
-	xxx := "hihihi"
-	fmt.Println(xxx)
 }
